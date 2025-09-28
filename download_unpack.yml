@@ -1,0 +1,33 @@
+---
+- name: Task 1:Downloading and unpacking Kafka
+  hosts: localhost
+  become: yes
+  vars:
+    kafka_url: "https://downloads.apache.org/kafka/3.8.1/kafka_2.13-3.8.1.tgz"
+    kafka_dest: "/opt/kafka"
+    kafka_tmp: "/tmp/kafka.tgz"
+  tasks:
+    - name: Удаляем старую папку Kafka
+      file:
+        path: "{{ kafka_dest }}"
+        state: absent
+      ignore_errors: yes
+
+    - name: Создаем папку назначения
+      file:
+        path: "{{ kafka_dest }}"
+        state: directory
+        mode: '0755'
+
+    - name: Скачиваем Kafka
+      get_url:
+        url: "{{ kafka_url }}"
+        dest: "{{ kafka_tmp }}"
+        mode: '0644'
+
+    - name: Распаковываем Kafka
+      unarchive:
+        src: "{{ kafka_tmp }}"
+        dest: "{{ kafka_dest }}"
+        remote_src: yes
+        extra_opts: [--strip-components=1]

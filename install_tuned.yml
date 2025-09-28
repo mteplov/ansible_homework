@@ -1,0 +1,16 @@
+---
+- name: Установка и запуск Tuned
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Устанавливаем Tuned
+      apt:
+        name: tuned
+        state: present
+        update_cache: yes
+
+    - name: Запускаем Tuned и включаем автозапуск
+      systemd:
+        name: tuned
+        state: started
+        enabled: yes

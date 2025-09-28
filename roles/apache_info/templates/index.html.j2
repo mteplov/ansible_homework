@@ -1,0 +1,16 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>System Info</title>
+</head>
+<body>
+<h1>Характеристики хоста {{ ansible_hostname }}</h1>
+<ul>
+  <li>CPU cores: {{ ansible_processor_cores | default(ansible_processor_vcpus, 'unknown') }}</li>
+  <li>RAM: {{ ansible_memtotal_mb }} MB</li>
+  {% set first_disk = ansible_devices.keys() | list | first %}
+  <li>Первый HDD: {{ ansible_devices[first_disk]['size'] }}</li>
+  <li>IP: {{ ansible_default_ipv4.address }}</li>
+</ul>
+</body>
+</html>

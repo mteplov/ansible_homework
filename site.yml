@@ -1,0 +1,6 @@
+---
+- name: Установка и проверка Apache
+  hosts: localhost
+  become: yes
+  roles:
+    - apache_info

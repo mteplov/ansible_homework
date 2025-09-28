@@ -1,0 +1,19 @@
+---
+- name: Изменение motd с IP и hostname
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Собираем IP и hostname
+      set_fact:
+        motd_text: |
+          Хост: {{ ansible_hostname }}
+          IP: {{ ansible_default_ipv4.address }}
+          Хорошего дня, системный администратор! 
+
+    - name: Устанавливаем motd
+      copy:
+        content: "{{ motd_text }}"
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'

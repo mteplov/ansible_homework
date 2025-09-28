@@ -1,0 +1,14 @@
+---
+- name: Изменение приветствия системы
+  hosts: localhost
+  become: yes
+  vars:
+    motd_text: "Добро пожаловать на систему Ansible!"
+  tasks:
+    - name: Устанавливаем motd
+      copy:
+        content: "{{ motd_text }}"
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
